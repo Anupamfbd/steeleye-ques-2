@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<title>
+			Ques 2
+		</title>
+	</head>
+	<script>
+		
+		function highlightHTMLContent() {
+
+            
+      let htmlContent = '<p><span>Hi David<br><br>Headline : Energix Closes $ABC Energix Financing.<span><p>';
+
+			const plainText = 'Hi David Headline : Energix Closes $ABC Energix Financing.';
+
+			const plainTextPositions = [
+			  { start: 0, end: 1},  
+			  { start: 3, end: 7 },
+			  { start: 9, end: 16 },
+			  { start: 18, end: 18},
+			  { start: 20, end: 26}, 
+			  { start: 28, end: 33},
+			  { start: 35, end: 38},
+			  { start: 40, end: 46},
+			  { start: 48, end: 56},
+			  { start: 57, end: 57}
+			];
+            //console.log(plainTextPositions.length);
+
+			for(let i=0; i< plainTextPositions.length; i++){
+
+				let copytext= plainText;
+				let word;
+				let newword;
+
+				//first we select the object based on index and check that if thier start and end are same or not.
+				//this is because we want to separate the single letter from other words. 
+				if(plainTextPositions[i].start != plainTextPositions[i].end){
+					 word = copytext.slice(plainTextPositions[i].start, plainTextPositions[i].end+1) ;
+				}
+				else{
+					word= copytext.substr(plainTextPositions[i].start, 1);
+				}
+
+				//---------we will check whether the word contain any special character or not--------
+				// if it contain then we will highlight that 
+				if(word.match(/[0-9!@#\$%\^\&*\)\(+=._-]/g)){
+              newword = word.replace(/[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]/g, '<mark>$&</mark>');
+			  }
+                 
+                console.log(word);
+                console.log(newword);
+                
+                //using regular expresssion to target all the word with the same name. 
+				const regexPattern = new RegExp(word, 'g');
+				
+				let text = htmlContent;
+				let newText;
+                
+
+				if(word.match(/[0-9!@#\$%\^\&*\)\(+=._-]/g)){
+					    newText = text.replaceAll(word, newword);
+				}
+				else{
+					    //newText = text.replaceall(word, '<mark>$&</mark>');
+              newText = text.replaceAll(regexPattern, '<mark>$&</mark>');
+				}
+			    htmlContent = newText;
+  
+			}
+			
+			 console.log(htmlContent);
+
+	        // return htmlContent;
+    }
+
+	</script>
+<body>
+  <button onclick="highlightHTMLContent()">Click here</button>
+  <!-- <p>This is some <b><mark>highlightable</mark></b> content.</p> -->
+  <p><span><mark>Hi</mark> <mark>David</mark><br><br><mark>Headline</mark> <mark>:</mark> <mark><mark>Energix</mark></mark> <mark>Closes</mark> <mark>$</mark><mark>A</mark><mark>B</mark><mark>C</mark> <mark><mark>Energix</mark></mark> <mark>Financing</mark><mark>.</mark><span><p>
+</body>
+</html>
